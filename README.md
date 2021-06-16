@@ -21,7 +21,7 @@ In this project, I'm gonna apply data modeling with Postgres and build an ETL pi
 - etl.py: Read JSON logs and JSON metadata and load the data into generated tables.
 
 ## Database Schema
-(Project1.png)
+![ERD](Project1.png)
 
 - songplays: Records in log data associated with song plays
 - users: Users in the app
@@ -57,7 +57,7 @@ And below is an example of what a single song file, TRAABJL12903CDCF1A.json, loo
 }
 ```
 
-#### Final tabes
+#### Final tables
 - songs table: Save song ID, title, artist ID, year, and duration from dataset
 
 | song_id            | title                          | artist_id          | year | duration  |
@@ -130,4 +130,3 @@ And below is an example of what the data in a log file, 2018-11-12-events.json, 
 |-------------|----------------------------|---------|-------|---------|-----------|------------|-------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
 | 1           | 2018-11-29 00:00:57.796000 | 73      | paid  | -       | -         | 954        | Tampa-St. Petersburg-Clearwater, FL | "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.78.2 (KHTML, like Gecko) Version/7.0.6 Safari/537.78.2" |
 | 2           | 2018-11-29 00:01:30.796000 | 24      | paid  | -       | -         | 984        | Lake Havasu City-Kingman, AZ        | "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36"         |
-
