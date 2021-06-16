@@ -21,7 +21,11 @@ In this project, I'm gonna apply data modeling with Postgres and build an ETL pi
 - etl.py: Read JSON logs and JSON metadata and load the data into generated tables.
 
 ## Database Schema
+<<<<<<< HEAD
 ![ERD](Project1.png)
+=======
+![](Project1.png)
+>>>>>>> 9d7b0887d01f3556d0e9766d64e3adcddaf8a0f4
 
 - songplays: Records in log data associated with song plays
 - users: Users in the app
