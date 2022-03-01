@@ -6,21 +6,49 @@ from sql_queries import *
         
         
 def process_song_file(cur, filepath):
+    """
+    Perform ETL on song_data to create the songs and artists dimensional tables:
+    - Process song_data files and upload to database.
+    - Extract song data and implement sql query to insert records into table.
+    - Extract artist data and implement sql query to insert records into table.
+
+    Parameters:
+    - cur: cursor object that allows Python to execute PostgreSQL commands in a database session.
+    - filepath (string) : path to a song_data file.
+
+    Returns:
+      None
+    """
     # open song file
-    df = pd.read_json(filepath , lines = True)
+    df = pd.read_json(filepath, lines=True)
     df['year'] = df['year'].apply(lambda x: x if x != 0 else None)
     df = df.replace({pd.np.nan: None, "": None})
 
     # insert song record
-    song_data = df[['song_id','title','artist_id','year','duration']].values[0].tolist()
+    song_data = df[['song_id', 'title', 'artist_id', 'year', 'duration']].values[0].tolist()
     cur.execute(song_table_insert, song_data)
     
     # insert artist record
-    artist_data = df[['artist_id','artist_name','artist_location','artist_latitude','artist_longitude']].values[0].tolist()
+    artist_data = df[['artist_id', 'artist_name', 'artist_location', 'artist_latitude', 'artist_longitude']].values[0].tolist()
     cur.execute(artist_table_insert, artist_data)
 
 
 def process_log_file(cur, filepath):
+    """
+    Perform ETL on log_data to create the time and users dimensional tables,
+    the songplays fact table:
+    - Process log_data files and load each record into table.
+    - Extract time data and implement sql query to insert records for the timestamps into table.
+    - Extract user data and implement sql query to insert records into table.
+    - Extract and inserts data for songplays table from different tables by implementing a select query.
+
+    Parameters:
+    - cur: cursor object that allows Python to execute PostgreSQL commands in a database session
+    - filepath (string) : path to a log_data file
+
+    Returns:
+      None
+    """
     # open log file
     df = pd.read_json(filepath , lines = True)
 
@@ -63,6 +91,18 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    """
+    Process all files within the filepath directory through the input function.
+
+    Parameters:
+    - cur: cursor object that allows Python to execute PostgreSQL commands in a database session
+    - conn: connection created to the database
+    - filepath (string) : path to data file
+    - func: process function
+
+    Returns:
+      None
+    """
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -83,6 +123,13 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    """
+    Build ETL Pipeline for Sparkify song play data:
+
+    Instantiate a session to the Postgres database,
+    acquire a cursor object to process SQL queries,
+    and process both the song and the log data.
+    """
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
