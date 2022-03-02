@@ -1,10 +1,10 @@
 # DROP TABLES
 
-songplay_table_drop = "DROP TABLE SONGPLAYS;"
-user_table_drop = "DROP TABLE USERS;"
-song_table_drop = "DROP TABLE SONGS;"
-artist_table_drop = "DROP TABLE ARTISTS;"
-time_table_drop = "DROP TABLE TIME;"
+songplay_table_drop = "DROP TABLE IF EXISTS SONGPLAYS;"
+user_table_drop = "DROP TABLE IF EXISTS USERS;"
+song_table_drop = "DROP TABLE IF EXISTS SONGS;"
+artist_table_drop = "DROP TABLE IF EXISTS ARTISTS;"
+time_table_drop = "DROP TABLE IF EXISTS TIME;"
 
 # CREATE TABLES
 
@@ -68,7 +68,7 @@ ON CONFLICT (songplay_id) DO NOTHING
 
 user_table_insert = ("""INSERT INTO USERS(user_id, first_name, last_name, gender, level) \
 VALUES(%s, %s, %s, %s, %s)
-ON CONFLICT (user_id) DO NOTHING
+ON CONFLICT(user_id) DO UPDATE SET level = excluded.level
 ;""")
 
 song_table_insert = ("""INSERT INTO SONGS(song_id, title, artist_id, year, duration) \
